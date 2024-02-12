@@ -100,8 +100,8 @@ router.post('/', (req, res) => {
     })
     .then((productTagIds) => res.status(200).json(productTagIds))
     .catch((err) => {
-      console.log(err);
-      res.status(400).json(err);
+      console.log({ message: "Unable to create product.\n\n" + err });
+      res.status(400).json({ message: "Unable to create product.\n\n" + err });
     });
 });
 
@@ -146,7 +146,7 @@ router.put('/:id', (req, res) => {
     })
     .catch((err) => {
       // console.log(err);
-      res.status(400).json(err);
+      res.status(400).json({ message: "Unable to update product with id " + req.params.id + ".\n\n" + err });
     });
 });
 
@@ -160,13 +160,13 @@ router.delete('/:id', async (req, res) => {
     });
 
     if (!categoryData) {
-      res.status(404).json({ message: 'No product found with that id!' });
+      res.status(404).json({ message: "No product found with id " + req.params.id + "." });
       return;
     }
 
     res.status(200).json(categoryData);
   } catch (err) {
-    res.status(500).json({ message: 'Unable to find product.  ' + err });
+    res.status(500).json({ message: "Unable to find product with id " + req.params.id + ".\n\n" + err });
   }
 });
 
